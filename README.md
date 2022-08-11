@@ -1,6 +1,3 @@
-
-npm publish --access=public
-
 # y-packaging
 
 ## Project setup
@@ -20,3 +17,11 @@ npm run build
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+
+
+## npm create
+```
+npm publish --access=public
+```
