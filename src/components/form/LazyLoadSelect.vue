@@ -376,7 +376,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~@/assets/css/core.scss';
+@import '@/assets/styles/base/theme.scss';
 .loading-spiral{
   border: 2px solid $theme-color!important;
 }

@@ -1,5 +1,4 @@
 import Store from '@/store'
-import { UserType } from '@/utils/config/types'
 
 export const numberOnly = {
   bind (el, binding, vnode) {

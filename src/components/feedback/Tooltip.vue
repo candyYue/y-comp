@@ -5,7 +5,7 @@
     <div class="tool-tip-icon">
 
         <slot name="tipIcon">
-          <a class="ruleStyle" slot="tipIcon" v-if="showButton">统计规则<img src="../../assets/icons/tool-tip-icon.png" class="iconStyle"></a>
+          <a class="ruleStyle" slot="tipIcon" v-if="showButton">统计规则<img src="~@/assets/icons/tool-tip-icon.png" class="iconStyle"></a>
           <i class="tip-icon-interpret" slot="tipIcon" v-else></i>
         </slot>
     </div>
@@ -124,7 +124,7 @@ export default {
     position: absolute;
     top: 0;
     left: 0;
-    background: url("../../assets/icons/tool-tip-icon.png") no-repeat center/contain;
+    background: url("~@/assets/icons/tool-tip-icon.png") no-repeat center/contain;
     cursor: pointer;
   }
   .tool-tip-content{
@@ -146,7 +146,7 @@ export default {
       top: 50%;
       left: -17px;
       z-index: 10;
-      background:url(../../assets/icons//tool-tip-tri.png) no-repeat;
+      background:url(~@/assets/icons/tool-tip-tri.png) no-repeat;
       background-position: 4px 2px;
       background-size: contain;
       transform: scale(1) translateY(-50%);

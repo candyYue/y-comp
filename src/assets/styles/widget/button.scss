@@ -1,0 +1,47 @@
+.#{$prefixCls}{
+  &-button{
+    color:$color-white;
+    font-family: "iconfont" !important;
+    font-size: 14px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    padding: $btn-default-padding;
+    border:$border-base;
+    border-radius: $border-radius-base;
+    cursor: pointer;
+    i{
+        display: inline-block;
+        font-style:normal;
+    }
+    .icon-loading{
+        transform-origin: center center;
+        animation: rotating 1.5s linear infinite;
+    }
+  }
+}
+
+
+@each $type, $color in (primary: $color-theme, info: $color-info, success: $color-success, warning: $color-warning, danger: $color-danger) {
+    .button-#{$type} {
+        background: $color;
+        &:hover,
+        &:focus{
+            opacity:.87 ;
+            outline: none;
+        }
+    }
+}
+
+@each $size, $padding in (medium: $btn-default-padding, small: $btn-small-padding, large: $btn-large-padding) {
+    .button-#{$size} {
+        padding: $padding;
+    }
+}
+
+.#{$prefixCls}-button[disabled]{
+    cursor: not-allowed;
+    opacity: .58;
+}
+
+

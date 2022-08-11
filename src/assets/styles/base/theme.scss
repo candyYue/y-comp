@@ -1,0 +1,123 @@
+$prefixCls: dy;
+
+/* Colors */
+$color-theme:#4cabe9;
+$color-white:#fff !default;
+$color-black: #000 !default;
+$color-primary:$color-theme!default;
+
+$color-primary: $color-theme !default;
+$color-success: #67c23a !default;
+$color-warning: #e6a23c !default;
+$color-danger: #f56c6c !default;
+$color-info: #909399 !default;
+
+$color-bg: #f8f9fd;
+$color-text:#595d65;
+$color-text-placeholder: #c0c4cc !default;
+
+/* Border */
+$border-width-base: 1px !default;
+$border-style-base: solid !default;
+$border-color-base: #dcdfe6 !default;
+$border-color-light: #e4e7ed !default;
+$border-base: $border-width-base $border-style-base $border-color-base !default;
+$border-radius-base: 4px !default;
+$border-radius-small: 2px !default;
+$border-color-hover: $color-text-placeholder !default;
+
+/* Font */
+$font-size:14px !default;
+$font-family: "Helvetica Neue","Helvetica","PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+$font-lineheight:1.5;
+$font-color-disabled-base: #bbb !default;
+
+/* button */
+$btn-small-padding:5px 8px;
+$btn-default-padding: 7px 16px;
+$btn-small-padding: 3px 8px;
+$btn-large-padding: 10px 21px;
+$btn-small-radius: 3px;
+$btn-default-radius: 4px;
+$btn-large-radius: 6px;
+$btn-active-shade-percent: 40%;
+$btn-hover-shade-percent: 40%;
+
+/* input */
+$input-base-bg: #fff;
+$input-font-size: $font-size !default;
+$input-width: 140px !default;
+$input-height: 40px !default;
+$input-border: $border-base !default;
+$input-border-color-hover: $color-text-placeholder !default;
+
+/* Icon */
+$icon-color: #666 !default;
+$icon-color-base: $color-info !default;
+
+// base
+$theme: #52BBFF;
+$colorBg: #F1F2F7;
+$colorText: #303133;
+$colorPlaceholder:#b4bccd;
+$fontSize:14px;
+$fontFamily: "Helvetica Neue","Helvetica","PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+$fontLineHeight:1.5;
+// $info: #90939A;
+$success:#67C139;
+$warning:#FFB21A;
+$danger:#fe4f4e;
+$textColor:#595d65;
+$border-input:#d8dce5;
+$waiting:#8E9CBB;
+$closed: #A1887F;
+$locked: #BA68C8;
+
+
+// global
+$global-width: 1024px;
+$theme-color: #52BBFF;
+$primary-text-color:#303133;
+$subsidiary-text-color: #606265;
+$info-text-color: #90939A;
+$placeholder-text-color: #B4BDCE;
+$text-error:#FE4F4E;
+
+
+// header
+$header-height:54px;
+
+// sidebar
+$main-minheight: calc(100vh - 72px - 60px - 20px);
+$sidebar-width:180px;
+$sidebar-logo-bg:#2C3E50;
+$sidebar-menu-bg: #34485E;
+$sidebar-menu-height:48px;
+$sidebar-color:rgba(255, 255, 255, 0.65);
+$sidebar-active-color:#fff;
+// $sidebar-active-bg: #2A3541;
+
+
+// modal
+// $modal-content-height:calc(calc(100vh - 57px) - 140px);
+$modal-content-height:calc(100vh - 57px);
+
+
+// table
+$table-hover: #EFF9FF;
+$table-striped: #f8f8f8;
+// pagination
+$pagination-color: #606265;
+
+// input
+$input-height: 36px;
+$input-border-color: #d8dce5;
+$input-border-active-color: #c0c4cc;
+
+
+/* Break-point
+--------------------------*/
+$--md: 1024px !default;
+$--lg: 1366px !default;
+
+$border: 1px solid #E6E8EE;

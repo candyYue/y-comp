@@ -1,8 +1,9 @@
-import Vue from 'vue'
+// import Vue from 'vue'
+import { createApp ,getCurrentInstance} from 'vue'
 class LoadingProgress {
   constructor (props) {
     this.instance = null
-    this.$el = null
+    // this.$el = null
     this.displayValue = props.initValue
     this.onEnd = props.onEnd
     this.update(props.initValue)
@@ -10,7 +11,7 @@ class LoadingProgress {
   }
   render () {
     const progress = this
-    this.instance = new Vue({
+    this.instance = createApp({
       name: 'loading-progress',
       data () {
         return {
@@ -44,8 +45,7 @@ class LoadingProgress {
         progress.close()
       }
     })
-    this.$el = this.instance.$mount().$el
-    document.querySelector('body').appendChild(this.$el)
+    this.instance.mount(document.querySelector('body'))
   }
   update (value) {
     this.displayValue = value
@@ -54,7 +54,8 @@ class LoadingProgress {
     }
   }
   close () {
-    document.querySelector('body').removeChild(this.$el)
+    this.instance.unmount(document.querySelector('body'))
+    // document.querySelector('body').removeChild(this.$el)
   }
 }
 const loadingProgress = (value) => new LoadingProgress(value)

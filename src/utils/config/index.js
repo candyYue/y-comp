@@ -29,4 +29,9 @@ const province = {
   'PinYin': '上海市',
   'aomen': '澳门'
 }
-export default province
+
+const prefixCls = 'dy'
+export {
+  province,
+  prefixCls
+} 

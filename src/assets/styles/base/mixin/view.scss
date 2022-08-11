@@ -1,0 +1,60 @@
+@mixin skin($bg, $color) {
+  background-color: $bg;
+  color: $color;
+}
+
+@mixin placeholder {
+  &::-webkit-input-placeholder {
+    @content
+  }
+  &::-moz-placeholder {
+    @content
+  }
+  &:-ms-input-placeholder {
+    @content
+  }
+}
+
+;
+/*滚动条样式*/
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 12px;
+  background: #c1c1c1;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 5px #c1c1c1;
+  border-radius: 12px;
+  background: #fafafa;
+}
+
+::-moz-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-moz-scrollbar-thumb {
+  border-radius: 12px;
+  background: #c1c1c1;
+}
+
+::-moz-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 5px #c1c1c1;
+  border-radius: 12px;
+  background: #fafafa;
+}
+
+html {
+  scrollbar-arrow-color: #c1c1c1; // 箭头
+  scrollbar-face-color: #c1c1c1; // scrollbar
+  scrollbar-highlight-color: #c1c1c1;
+  scrollbar-shadow-color: #c1c1c1;
+  scrollbar-shadow-color: #c1c1c1; // scrollbar-border
+  scrollbar-track-color: #fafafa; // track
+}

@@ -226,7 +226,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~@/assets/css/core.scss';
+@import '@/assets/styles/base/theme.scss';
 .audio-tootip.el-tooltip__popper.is-light{
   transform: translateY(5px);
   &.is-light[x-placement^="top"] .popper__arrow{

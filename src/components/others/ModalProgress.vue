@@ -29,7 +29,6 @@
 <script>
 import api from '@/service/api'
 import request from '@/utils/request'
-import { UserType } from '@/utils/config/types'
 export default {
   name: 'progress-modal',
   props: {
@@ -183,7 +182,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../../assets/css/core.scss';
+@import '@/assets/styles/base/theme.scss';
 .modal.modal-progress{
   color:$primary-text-color;
   .modal-body{

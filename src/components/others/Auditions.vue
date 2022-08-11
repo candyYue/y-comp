@@ -300,7 +300,7 @@ export default {
 .audio-control{
   .el-icon-audioplay{
     @include size(16px);
-    background: url('~@/assets/icons/ivrnode/ivrnode-play.png') no-repeat center/contain
+    background: url('~@/assets/icons/ivrnode-play.png') no-repeat center/contain
   }
   .el-loading-spinner{
       margin-top: -8px;

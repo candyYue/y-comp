@@ -1,0 +1,57 @@
+@import '@/assets/styles/base/theme.scss';
+
+.modal.modal-import{
+    // .modal-body{
+    //   padding: 17px 26px 32px 24px;
+    // }
+    .modal-footer{
+      .el-button{
+        padding: 8px 13px;
+      }
+    }
+  }
+  
+  .modal-import{
+    &__descr{
+      color:$primary-text-color;
+      margin-bottom: 6px;
+      p{
+        margin-top: 4px;
+      }
+      a{
+        margin-left: 2px;
+        &:hover{
+          text-decoration: underline;
+        }
+      }
+    }
+    .import-btn{
+      display: inline-block;
+    }
+    .el-button{
+      padding: 8px 14px;
+    }
+    &__info{
+      font-size: 12px;
+      margin-left: 8px;
+    }
+    &__file-name{
+      color: $info-text-color;
+      max-width: 230px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    &__error{
+      color: $text-error;
+    }
+    .tip-view {
+      height: 24px;
+      color: #888888;
+      background-color: #EDF8FF;
+      margin: -24px -40px 24px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 12px;
+    }
+  }

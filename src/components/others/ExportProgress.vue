@@ -182,7 +182,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../../assets/css/core.scss';
+@import '@/assets/styles/base/theme.scss';
 .modal.modal-progress{
   color:$primary-text-color;
   .modal-body{

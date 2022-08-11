@@ -1,0 +1,46 @@
+// transition
+$transition-timing-function:ease-in-out;
+$transition-duration: 0.35s;
+$transition: all $transition-timing-function $transition-duration;
+
+
+$animation-type-list : fade,
+fade-up;
+@each $animation in $animation-type-list {
+  .#{$animation}-enter-active,
+  .#{$animation}-leave-active {
+    transition: $transition;
+  }
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0
+}
+
+.fade-up-enter,
+.fade-up-leave-active {
+  opacity: 0;
+  transform: translate(0, -30%);
+}
+
+ .only-fade-up-active,
+ .only-fade-up-leave-active {
+   transition: $transition;
+ }
+
+.only-fade-up-enter,
+.only-fade-up-leave-active {
+  opacity: 0;
+  transform: translate(0, -30%);
+}
+
+// 旋转
+// @keyframes rotating{
+//   form {transform:rotateZ(0deg);}    
+//   to    {transform:rotateZ(360deg);}
+// }
+// @-webkit-keyframes rotating{/* Safari and Chrome */
+//   form {transform:rotateZ(0deg);}    
+//   to    {transform:rotateZ(360deg);}
+// }
