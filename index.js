@@ -49,8 +49,10 @@ import {
   contextmenuPos
 } from '@/utils/helper/position'
 
-
+import DButton from '@/components/button'
+import DLoadingProgress from '@/components/loadingProgress'
 export {
+  //方法
   test,
   isdifferentArray,
   getArrEqual,
@@ -74,5 +76,9 @@ export {
   objDifference,
   IEVersion,
   getCursorXY,
-  contextmenuPos
+  contextmenuPos,
+  //组件
+
+  DButton,
+  DLoadingProgress
 } 

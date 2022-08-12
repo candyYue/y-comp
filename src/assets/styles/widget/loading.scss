@@ -19,19 +19,19 @@
 @import '@/assets/styles/base/theme.scss';
 @import '@/assets/styles/base/mixin/size.scss';
 .loading-progress-mask{
-    @include fullscreen();
+    // @include fullscreen();
     background-color: rgba(0, 0, 0, .5);
-    // position: fixed;
-    // left: 0;
-    // right: 0;
-    // top: 0;
-    // bottom: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
     // background-color: transparent;
     z-index: 999;
 }
 .loading-progress{
     padding-top: 50px;
-    margin: 250px auto;
+    margin: 150px auto;
     width: 320px;
     height: 180px;
     border-radius: 3px;

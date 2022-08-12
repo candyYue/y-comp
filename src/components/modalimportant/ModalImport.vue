@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import ModalProgress from './ModalProgress.vue'
+import ModalProgress from '@/components/ModalProgress'
 import api from '../../service/api'
 
 export default {

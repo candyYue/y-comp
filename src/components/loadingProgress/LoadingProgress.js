@@ -45,7 +45,12 @@ class LoadingProgress {
         progress.close()
       }
     })
-    this.instance.mount(document.querySelector('body'))
+
+    setTimeout(() => {
+      this.instance.mount(document.querySelector('.component-view'))
+    }, 1000);
+    
+    
   }
   update (value) {
     this.displayValue = value
@@ -54,7 +59,7 @@ class LoadingProgress {
     }
   }
   close () {
-    this.instance.unmount(document.querySelector('body'))
+    this.instance.unmount(document.querySelector('.component-view'))
     // document.querySelector('body').removeChild(this.$el)
   }
 }
