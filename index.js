@@ -6,7 +6,7 @@ import {
   isdifferentArray,
   getArrEqual,
   getArrInclude
-} from '@/utils/helper/arrayHelper'
+} from './src/utils/helper/arrayHelper'
 
 import {
   oneOf,
@@ -19,38 +19,38 @@ import {
   handleXmlString,
   handleXmlDoc,
   notEmptyObject
-} from '@/utils/helper/assist'
+} from './src/utils/helper/assist'
 
 import {
   Base64
-} from '@/utils/helper/base64'
+} from './src/utils/helper/base64'
 
 import {
   dayEnd,
   dayStart,
   timeStamp,
   duration
-} from '@/utils/helper/datehelper'
+} from './src/utils/helper/datehelper'
 
 import {
   deepCompare
-} from '@/utils/helper/deepCompare'
+} from './src/utils/helper/deepCompare'
 
 import {
   objDifference
-} from '@/utils/helper/objDifference'
+} from './src/utils/helper/objDifference'
 
 import {
   IEVersion
-} from '@/utils/helper/ieVersion'
+} from './src/utils/helper/ieVersion'
 
 import {
   getCursorXY,
   contextmenuPos
-} from '@/utils/helper/position'
+} from './src/utils/helper/position'
 
-import DButton from '@/components/button'
-import DLoadingProgress from '@/components/loadingProgress'
+import DButton from './src/components/button'
+import DLoadingProgress from './src/components/loadingProgress'
 export {
   //方法
   test,
