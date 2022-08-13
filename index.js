@@ -38,7 +38,7 @@ import {
 
 import {
   objDifference
-} from './src/utils/helper/objDifference'
+} from './src/utils/helper/difference'
 
 import {
   IEVersion
@@ -79,6 +79,6 @@ export {
   contextmenuPos,
   //组件
 
-  DButton,
-  DLoadingProgress
+  // DButton,
+  // DLoadingProgress
 } 
