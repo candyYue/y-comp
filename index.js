@@ -49,8 +49,8 @@ import {
   contextmenuPos
 } from './src/utils/helper/position'
 
-import DButton from './src/components/button'
-import DLoadingProgress from './src/components/loadingProgress'
+// import DButton from './src/components/button'
+// import DLoadingProgress from './src/components/loadingProgress'
 export {
   //方法
   test,
