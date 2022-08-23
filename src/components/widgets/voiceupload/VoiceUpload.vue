@@ -58,10 +58,8 @@
 </template>
 
 <script>
-import api from '@/service/api'
 import Auditions from '../../others/Auditions'
 import { xmlValidatorPattern, xmlOnlySymbolPattern } from '@/utils/rules'
-import { mapGetters } from 'vuex'
 
 export default {
   name: 'voice-upload',
@@ -107,7 +105,10 @@ export default {
     admin: {
       type: Boolean,
       default: false
-    }
+    },
+    actionSrc () {
+      return '/aicall/file/uploadAudioFile'
+    },
   },
 
   watch: {
@@ -144,12 +145,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters({
-      SystemConfigs: 'AICall/SystemConfigs'
-    }),
-    action () {
-      return api.AICall.uploadFile
-    },
+    
     fileTip () {
       return this.file && this.file.file_name
     }
@@ -170,11 +166,6 @@ export default {
       this.hasError = false
     },
     beforeUpload (file) {
-      if (file.name.slice(0, -4).length > Number(this.SystemConfigs.upload_filename_length)) {
-        this.hasError = true
-        this.errorTip = `文件名不能超过${Number(this.SystemConfigs.upload_filename_length)}个字符 `
-        return false
-      }
       if (xmlValidatorPattern.test(file.name)) {
         this.hasError = true
         this.errorTip = `文件名不能包含特殊: ${String(xmlValidatorPattern).slice(2, -6)}等 `
@@ -183,11 +174,6 @@ export default {
       if (!file.name.substring(0, file.name.length - 4).match(xmlOnlySymbolPattern)) {
         this.hasError = true
         this.errorTip = '文件名不能只包含特殊符号'
-        return false
-      }
-      if (file.size > this.SystemConfigs.upload_voice_size_limit * 1024 * 1024 || file.name.substring(file.name.length - 4).toLowerCase() !== '.wav') {
-        this.hasError = true
-        this.errorTip = `请选择小于${this.SystemConfigs.upload_voice_size_limit}M、WAV格式的文件`
         return false
       }
       this.hasError = false
@@ -226,101 +212,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@/assets/styles/base/theme.scss';
-.audio-tootip.el-tooltip__popper.is-light{
-  transform: translateY(5px);
-  &.is-light[x-placement^="top"] .popper__arrow{
-    transform: translateX(-2px);
-  }
-}
-.voice-upload{
-  display: inline-block;
-  vertical-align: top;
-  font-size: 0;
-
-  .tool-tip{
-    margin-left: 8px;
-    width: 14px;
-    height: 36px;
-    vertical-align: middle;
-    margin-right: 12px;
-    i{
-      height: 36px;
-      line-height: 36px;
-      // vertical-align: middle;
-    }
-  }
-
-  // 文件信息
-  &__tip {
-    color: $info-text-color;
-    display: inline-block;
-    // vertical-align: top;
-    vertical-align: middle;
-    line-height: 17px;
-    font-size: 12px;
-    &.question-file-name{
-      margin-left: 10px
-    }
-    p {
-      display: inline-block;
-      @include ellipsis();
-      vertical-align: middle;
-    }
-    &.trigger p:not(.failed):not(:empty):before{
-      background: url('~@/assets/icons/file-hover.png') no-repeat center/contain;
-    }
-    p:not(.failed):not(:empty):before{
-        content: '';
-        display: inline-block;
-        width: 16px;
-        height: 16px;
-        background: url('~@/assets/icons/file.png') no-repeat center/contain;
-        vertical-align: -2px;
-        margin-right: 4px;
-    }
-  }
-  &__close.el-button{
-      vertical-align: top;
-      margin-left: 8px;
-      color: #B4BDCE;
-      vertical-align: middle;
-      padding: 0;
-      &:hover{
-        color: #909399;;
-      }
-  }
-  // 错误信息
-  .failed {
-      height: 23px;
-      line-height: 23px;
-      font-size: 12px;
-      display: inline-block;
-      color: $danger;
-      &.question-error-tip{
-        margin-left: 10px;
-        vertical-align: middle
-      }
-  }
-}
-
-.modal-header{
-  color: $colorText;
-  line-height: 22px;
-}
-.el-progress__text{
-  font-size: 14px!important;
-  color:#333333;
-}
-.modal.modal-padding-45 .modal-body {
-    padding: 30px 33px 32px;
-}
-.modal p.progress-tip{
-  @include ellipsis();
-  height: 20px;
-  line-height: 20px;
-  color: #606266;
-  font-size: 14px;
-}
+@import '../../../assets/styles/widget/voiceupload.scss';
 
 </style>

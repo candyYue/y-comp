@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import Button from '@/components/button'
+import Button from '@/components/widgets/button'
 const handleClick = () => {
   console.log('按钮点击了')
 }

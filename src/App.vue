@@ -6,7 +6,7 @@
   
 </template>
 <script setup>
-import SiderBar from '@/components/viewcompontents/siderbar.vue'
+import SiderBar from '@/components/views/siderbar.vue'
 </script>
 <style lang="scss">
 @import '@/assets/styles/base/theme.scss';

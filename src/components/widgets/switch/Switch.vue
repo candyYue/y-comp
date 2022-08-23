@@ -78,7 +78,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "@/assets/css/core.scss";
+@import "../../../assets/css/core.scss";
 .el-radio-button__inner{
   padding: 7px 25px;
 }
