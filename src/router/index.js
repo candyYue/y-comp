@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import PageButton from '../views/PageButton.vue'
 import LoadingProgress from '../views/LoadingProgress.vue'
+import Auditions from '../views/Auditions.vue'
 
 const routes = [
   {
@@ -20,6 +21,11 @@ const routes = [
     path: '/loadingprogress',
     name: 'loadingprogress',
     component: LoadingProgress
+  },
+  {
+    path: '/auditions',
+    name: 'auditions',
+    component: Auditions
   },
 ]
 

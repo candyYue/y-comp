@@ -1,7 +1,3 @@
-const test = ()=>{
-    console.log('test')
-}
-
 import {
   isdifferentArray,
   getArrEqual,
@@ -49,11 +45,9 @@ import {
   contextmenuPos
 } from '@/utils/helper/position'
 
-import DButton from '@/components/button'
-import DLoadingProgress from '@/components/loadingProgress'
+import DAuditions from '@/components/widgets/Auditions'
+
 export {
-  //方法
-  test,
   isdifferentArray,
   getArrEqual,
   getArrInclude,
@@ -79,6 +73,5 @@ export {
   contextmenuPos,
   //组件
 
-  DButton,
-  DLoadingProgress
+  DAuditions
 } 

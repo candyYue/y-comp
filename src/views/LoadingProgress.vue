@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import LoadingProgress from '@/components/loadingProgress'
+import LoadingProgress from '@/components/widgets/loadingProgress'
 </script>
 
 <style lang="scss" scoped>

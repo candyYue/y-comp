@@ -1,3 +1,4 @@
+@import '../base/mixin/size.scss';
 .call-audio{
     font-size: 12px;
     vertical-align: middle;
@@ -157,3 +158,29 @@
         }
     }
  }
+
+ .audio-control{
+  .el-icon-audioplay{
+    @include size(16px);
+    // background: url('../../icons/ivrnode-play.png') no-repeat center/contain
+  }
+  .el-loading-spinner{
+      margin-top: -8px;
+  }
+  .el-loading-spinner .circular{
+    width: 12px;
+    height: 12px;
+    vertical-align: 8px;
+  }
+  .el-loading-spinner .path{
+    stroke:#fff;
+  }
+  &.loading-btn{
+    background: rgba(82, 187, 255,.5);
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+.audio-close{
+  color: #B4BDCE;
+}
