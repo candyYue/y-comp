@@ -1,7 +1,8 @@
 <template>
     <div class="call-audio upload-audio">
-        <bgsound :src="audioSrc" v-if="isIE" :ref='uniqueIdRef' :data-key="uniqueIdRef"></bgsound>
-        <audio :src="audioSrc" :ref='uniqueIdRef' controls @ended='play=false' :data-key="uniqueIdRef" hidden v-else></audio>
+        <div v-if="isIE" > vue3不支持ie</div>
+        <!-- <bgsound :src="audioSrc" v-if="isIE" :ref='uniqueIdRef' :data-key="uniqueIdRef"></bgsound> -->
+        <audio :src="audioSrc" ref='uniqueIdRef' controls @ended='play=false' data-key="uniqueIdRef" hidden v-else></audio>
         <div class="audio-control" @click="togglePlay" :class="{'loading-btn':saveLoading}">
           <Loading v-if="saveLoading"/>
           <i v-else :class="(isIE ? !!audioSrc : play) ? 'el-icon-audiopause':'el-icon-audioplay'"></i>
@@ -24,7 +25,6 @@ import { defineProps ,toRefs , computed, defineEmits ,ref, reactive , watch, onM
 import { uniqueId } from '../../../utils/helper/assist'
 import Loading from '../loading'
 
-const uniqueIdString = uniqueId()
 const props = defineProps({
   fileInfo: Object,
   type: {
@@ -81,11 +81,7 @@ watch(fileInfo,() =>{
 })
 watch(autoplay,(val) =>{
   if (val) {
-    if (isIE.value) {
-      ttsTogglePlay()
-    } else {
-      togglePlay()
-    }
+    togglePlay()
   }
 })
 watch(playable,(val) =>{
@@ -96,23 +92,14 @@ watch(playable,(val) =>{
 const emit = defineEmits(['play','stop','error'])
 const togglePlay = async (state) => {
       // 开始暂停
-  let isPlaying = isIE.value ? audioElement.value.getAttribute('src') : play.value
+  let isPlaying = play.value
   if (state === 'play') {
     isPlaying = false
   }
   // console.log(isPlaying)
   if (!isPlaying) {
     console.log('开始播放')
-    if (isIE.value) {
-      emit('play', play.value)
-      await setAudioSrc()
-      audioElement.value.setAttribute('src', audioSrc.value)
-      const audioControl = audioElement.value.nextSibling.querySelector('i')
-      audioControl.classList.add('el-icon-audiopause')
-      audioControl.classList.remove('el-icon-audioplay')
-      pauseOthers(this)
-    } else {
-      play.value = true
+    play.value = true
       if (reloadSrc.value) {
         saveLoading.value = true
         await setAudioSrc()
@@ -120,7 +107,7 @@ const togglePlay = async (state) => {
       if (audioSrc.value && playable.value) {
         emit('play', play.value)
         bindPlay()
-        pauseOthers(this)
+        pauseOthers()
       } else {
         saveLoading.value = true
         await setAudioSrc()
@@ -128,7 +115,7 @@ const togglePlay = async (state) => {
           if (playable.value) {
             console.log('canplay')
             bindPlay()
-            pauseOthers(this)
+            pauseOthers()
             saveLoading.value = false
             emit('play', play.value)
           }
@@ -137,7 +124,6 @@ const togglePlay = async (state) => {
         })
         audioElement.value.addEventListener('error', onError.value)
       }
-    }
   } else {
     console.log('停止播放')
     emit('stop', play.value)
@@ -150,30 +136,18 @@ const ttsTogglePlay = async () => {
   audioElement.value.setAttribute('src', audioSrc.value)
 }
 const setAudioSrc = async () => {
-  audioSrc.value = ''
+  audioSrc.value = './test.mp3'
 }
 const clearAudioSrc = () => {
   audioSrc.value = null
 }
-const pauseOthers = (except) => {
-  if (!isIE.value) {
-    var audios = document.querySelectorAll('audio');
-    [].forEach.call(audios, audio => {
-      if (audio.dataset['key'] !== except.uniqueIdRef) {
-        audio.pause()
-      }
-    })
-  } else {
-    var bgsounds = document.querySelectorAll('bgsound');
-    [].forEach.call(bgsounds, bgsound => {
-      if (bgsound.dataset['key'] !== except.uniqueIdRef) {
-        const audioControl = bgsound.nextSibling.querySelector('i')
-        audioControl.classList.add('el-icon-audioplay')
-        audioControl.classList.remove('el-icon-audiopause')
-        bgsound.setAttribute('src', '')
-      }
-    })
-  }
+const pauseOthers = () => {
+  var audios = document.querySelectorAll('audio');
+  [].forEach.call(audios, audio => {
+    // if (audio.dataset['key'] !== uniqueIdRef.value) {
+    //   audio.pause()
+    // }
+  })
 }
 const changeSlider = (val) => {
   audioElement.value.currentTime = val / 100 * duration.value
@@ -208,7 +182,6 @@ const bindPlay = () => {
   if (!audioElement.value) {
     return
   }
-  console.log(audioElement)
   const playPromise = audioElement.value.play()
   playPromise.then(() => {
     play.value = true
@@ -225,28 +198,15 @@ const bindPlay = () => {
 const unbindPlay = () => {
   const audioElement = audioElement.value
   play.value = false
-  if (audioElement && !isIE.value) {
-    audioElement.pause()
-    audioElement.removeEventListener('timeupdate', onProgress)
-    audioElement.removeEventListener('pause', onPause)
-  }
-  if (isIE.value && audioElement) {
-    audioSrc.value = ''
-    audioElement.setAttribute('src', audioSrc.value)
-    const audioControl = audioElement.nextSibling.querySelector('i')
-    audioControl.classList.add('el-icon-audioplay')
-    audioControl.classList.remove('el-icon-audiopause')
+  if (audioElement.value && !isIE.value) {
+    audioElement.value.pause()
+    audioElement.value.removeEventListener('timeupdate', onProgress)
+    audioElement.value.removeEventListener('pause', onPause)
   }
 }
 onMounted(() => {
-  
 });
 onUnmounted(()=>{
-  if (isIE.value) {
-    Array.from(document.querySelectorAll('bgsound')).forEach((bgsound) => {
-      bgsound.setAttribute('src', '')
-    })
-  }
 
   unbindPlay()
 })
