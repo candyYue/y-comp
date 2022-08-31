@@ -1,17 +1,9 @@
-let xmlValidatorPattern = getXmlValidator()
+let xmlValidatorPattern = new RegExp(/[<>$'\"%]{1,}/)
 // let xmlOnlySymbolPattern = /[\u4e00-\u9fa5a-z0-9A-Z]/ug
 let xmlOnlySymbolPattern = /[\p{Unified_Ideograph}a-z0-9A-Z*]/ug
 
 function getXmlValidator () {
-  let configRegx = ''
-  const systemConfigs = localStorage.getItem('systemConfigs')
-  if (systemConfigs) {
-    const configStr = JSON.parse(systemConfigs).preg_name_global
-    const strPattern = configStr.slice(1, configStr.length - 1)
-    configRegx = new RegExp(strPattern)
-  }
-  xmlValidatorPattern = configRegx
-  return configRegx
+  return xmlValidatorPattern
 }
 
 const xmlValidator = {

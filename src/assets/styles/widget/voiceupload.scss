@@ -1,4 +1,5 @@
 @import '../base/theme.scss';
+@import '../base/mixin/text.scss';
 .audio-tootip.el-tooltip__popper.is-light{
   transform: translateY(5px);
   &.is-light[x-placement^="top"] .popper__arrow{
@@ -40,14 +41,14 @@
       vertical-align: middle;
     }
     &.trigger p:not(.failed):not(:empty):before{
-      background: url('~@/assets/icons/file-hover.png') no-repeat center/contain;
+      background: url(../../icons/file-hover.png) no-repeat center/contain;
     }
     p:not(.failed):not(:empty):before{
         content: '';
         display: inline-block;
         width: 16px;
         height: 16px;
-        background: url('~@/assets/icons/file.png') no-repeat center/contain;
+        background: url(../../icons/file.png) no-repeat center/contain;
         vertical-align: -2px;
         margin-right: 4px;
     }

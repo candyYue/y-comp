@@ -1,5 +1,6 @@
-import Vue from 'vue'
-import Modal from './Modal'
+import { createApp ,getCurrentInstance,h, ref } from 'vue'
+import Modal from '../modal'
+import { uniqueId } from '../../../utils/helper/assist'
 /* eslint-disable */
 // import merge from "element-ui/src/utils/merge"
 // type :
@@ -30,15 +31,19 @@ const enterAction = (callback)=>{
  * Message
  */
 class Message {
-  constructor() {}
+  constructor() {
+    this.uniqueId = uniqueId()
+  }
   show(opts) {
     const self = this;
     const msg = this.render(opts)
-    const msgElement = msg.$mount().$el;
+    const msgElement = msg
     this.msgElement = msgElement
     let timer = null;
-
-    document.body.appendChild(msgElement)
+    const div = document.createElement('div')
+    div.classList.add(this.uniqueId)
+    document.body.appendChild(div)
+    msgElement.mount(div)
     if (opts.duration && !opts.showClose) {
       if(opts.callbackMethod==='immediately'){
         opts.callback()
@@ -53,32 +58,29 @@ class Message {
         }, opts.duration + opts.animationDuration)
       }
     }
-
     return this
   }
-  close(element = this.msgElement, callback) {
+  close() {
     let flag = true;
+    const element = document.querySelector('.message-tip')
+    const elementP = document.querySelector(`.${this.uniqueId}`)
     element.classList.add('fade-up');
     const transitionEvent = (() => {
       for (let t in transitions) {
         return (element.style[t] !== undefined) && transitions[t]
       }
     })()
-    element.addEventListener(transitionEvent, (event) => {
-      if (callback) {
-        flag && document.body.removeChild(element) && callback()
-      } else {
-        flag && document.body.removeChild(element)
-      }
+    elementP.addEventListener(transitionEvent, (event) => {
+      flag && document.body.removeChild(elementP)
       flag = false;
     }, false);
   }
   render(opts) {
     const self = this;
     if (opts.name === 'message-tip') {
-      return new Vue({
+      return createApp({
         name: opts.name,
-        render(h) {
+        render() {
           return h('div', {
             class: ['message-tip', `message-${opts.icon}`, opts.extraClass],
             style: {
@@ -93,17 +95,14 @@ class Message {
               h('span', opts.content[0]),
               h('a',{
                 class: ['icon-message-link'],
-                on:{
-                click(e){
+                onClick(e){
                   opts.linkCallback && opts.linkCallback()
-                }}}, opts.linkContent),
+                }}, opts.linkContent),
               h('span', opts.content[1])]) :opts.content,
             opts.showClose ? h('i',{
               class: ['icon-message-close','el-icon-close'],
-              on:{
-                click(e){
-                  self.close(self.msgElement, opts.callback)
-                }
+              onClick(e){
+                self.close(self.msgElement, opts.callback)
               }
             }) : ''
           ])
@@ -112,7 +111,7 @@ class Message {
     }
     if (opts.name === 'message-box') {
       const {
-        value,
+        modelValue,
         title,
         showCancel,
         comfirmText,
@@ -125,7 +124,7 @@ class Message {
         showLoading = false
       } = opts;
       const attrs = {
-        value,
+        modelValue,
         title,
         showCancel,
         comfirmText,
@@ -136,50 +135,47 @@ class Message {
         syncCancel,
         showComfirm
       }
-      return new Vue({
+      return createApp({
         name: "message-box",
-        render(h) {
-          const messageBoxVnod = this;
+        render() {
+          const childModal = ref()
           enterAction(()=>{
             opts.successCallback && opts.successCallback()
-            messageBoxVnod.$refs.message.visible = false
+            childModal.value.visible = false
           })
-          return h('Modal', {
+          return h(Modal, {
+            ref: childModal,
             class: ['message-box', 'fade-in', 'modal-open', `message-box-${opts.icon}`, opts.extraClass],
-            attrs,
-            on: {
-              close() {
-                enterAction(()=>{return false})
-                messageBoxVnod.$refs.message.visible = false
-              },
-              cancel() {
-                enterAction(()=>{return false})
-                opts.cancelCallback && opts.cancelCallback();
-                messageBoxVnod.$refs.message.visible = false
-              },
-              comfirm() {
-                if (opts.showLoading && opts.successCallback) {
-                  messageBoxVnod.$refs.message.saveLoading = true
-                  let backfuc = opts.successCallback()
-                  backfuc.then(res => {
-                    messageBoxVnod.$refs.message.saveLoading = false
-                    messageBoxVnod.$refs.message.visible = false
-                  })
-                } else {
-                  opts.successCallback && opts.successCallback()
-                  messageBoxVnod.$refs.message.visible = false
-                }
-              },
-              leave() {
-                enterAction(()=>{return false})
-                document.body.removeChild(messageBoxVnod.$refs.message.$mount().$el);
+            ...attrs,
+            //事件监听器应以 onXxx 的形式书写
+            onClose() {
+              enterAction(()=>{return false})
+              childModal.value.visible = false
+            },
+            onCancel() {
+              enterAction(()=>{return false})
+              opts.cancelCallback && opts.cancelCallback();
+              childModal.value.visible = false
+            },
+            onComfirm() {
+              if (opts.showLoading && opts.successCallback) {
+                childModal.value.saveLoading = true
+                let backfuc = opts.successCallback()
+                backfuc.then(res => {
+                  childModal.value.saveLoading = false
+                  childModal.value.visible = false
+                })
+              } else {
+                opts.successCallback && opts.successCallback()
+                childModal.value.visible = false
               }
             },
-            ref: 'message'
+            onLeave() {
+              enterAction(()=>{return false})
+              const div = document.querySelector(`.${self.uniqueId}`)
+              document.body.removeChild(div);
+            },
           }, [
-            // h('i', {
-            //   class: ['icon-message', `icon-message-${opts.icon}`]
-            // }),
             h('div', {
               class: ['message-content'],
             }, [
@@ -187,16 +183,11 @@ class Message {
                 class: ['icon-message', `icon-message-${opts.icon}`]
               }),
               h('div',{
-                domProps: {
-                    innerHTML: opts.content
-                }
+                innerHTML: opts.content
               })
             ])
           ])
         },
-        components: {
-          Modal
-        }
       })
     }
   }
@@ -256,7 +247,7 @@ class MessageBox extends Message {
     super(...args)
     this.defaults = {
       name: "message-box",
-      value: true,
+      modelValue: true,
       showCancel: true,
       comfirmText: "确定",
       cancelText: '取消',

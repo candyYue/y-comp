@@ -10,7 +10,9 @@
         <transition name="fade-in">
           <div v-show='audioShow' class="toggle-show" v-if="showSlider">
             <el-slider v-model="slidervalue" :show-tooltip="false" @change='changeSlider'></el-slider>
-            <span>{{currentTime.toFixed(0)}}</span> / <span>{{duration.toFixed(0)}}</span>
+            <div class="audio-time">
+              <span>{{currentTimeStr}}</span> / <span>{{durationStr}}</span>
+            </div>
           </div>
         </transition>
     </div>
@@ -21,16 +23,15 @@ export default {
 };
 </script>
 <script setup>
-import { defineProps ,toRefs , computed, defineEmits ,ref, reactive , watch, onMounted, onUnmounted } from 'vue'
+// Vue3.2 版本后 defineProps 和 defineEmits 无需导入
+import { toRefs , computed, ref, reactive , watch, onMounted, onUnmounted } from 'vue'
+
 import { uniqueId } from '../../../utils/helper/assist'
 import Loading from '../loading'
 
+import { duration } from '../../../utils/helper/datehelper'
 const props = defineProps({
   fileInfo: Object,
-  type: {
-    type: String,
-    default: 'normal'
-  },
   showSlider: {
     type: Boolean,
     default: true
@@ -47,12 +48,12 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
-  audioText: {
+  emptyautio: {
     type: String,
     default: ''
   }
 })
-const {fileInfo, type, showSlider, autoplay, playable, reloadSrc,audioText} = toRefs(props)
+const {fileInfo, showSlider, autoplay, playable, reloadSrc,emptyautio} = toRefs(props)
 const uniqueIdRef = ref(null)
 const isIE = ref(window.IEBrowser)
 const audioShow = ref(false)
@@ -60,18 +61,20 @@ const audioSrc = ref('./test.mp3')
 const play = ref(false)
 const slidervalue = ref(0)
 const currentTime = ref(0)
-const duration = ref(0)
+const durationTime = ref(0)
 const saveLoading = ref(false)
 
 const audioElement = computed(() => {
   return uniqueIdRef.value
 })
+const currentTimeStr = computed(() => {
+  const value = currentTime.value.toFixed(0)
+  return duration(value)('hh:mm:ss')
+})
 
-watch(fileInfo,() =>{
-  audioSrc.value = ''
-  audioShow.value = false
-  unbindPlay()
-  audioElement.value.removeEventListener('error', onError)
+const durationStr = computed(() => {
+  const value = durationTime.value.toFixed(0)
+  return duration(value)('hh:mm:ss')
 })
 watch(fileInfo,() =>{
   audioSrc.value = ''
@@ -89,14 +92,13 @@ watch(playable,(val) =>{
     unbindPlay()
   }
 })
-const emit = defineEmits(['play','stop','error'])
+const emit = defineEmits(['play','stop','error','setAudioSrc'])
 const togglePlay = async (state) => {
       // 开始暂停
   let isPlaying = play.value
   if (state === 'play') {
     isPlaying = false
   }
-  // console.log(isPlaying)
   if (!isPlaying) {
     console.log('开始播放')
     play.value = true
@@ -126,20 +128,13 @@ const togglePlay = async (state) => {
       }
   } else {
     console.log('停止播放')
-    emit('stop', play.value)
     unbindPlay()
+    emit('stop', play.value)
   }
 }
-const ttsTogglePlay = async () => {
-  emit('play', play.value)
-  await setAudioSrc()
-  audioElement.value.setAttribute('src', audioSrc.value)
-}
 const setAudioSrc = async () => {
-  audioSrc.value = './test.mp3'
-}
-const clearAudioSrc = () => {
-  audioSrc.value = null
+  audioSrc.value = fileInfo.value&&fileInfo.value.src||'./test.mp3'
+  emit('setAudioSrc')
 }
 const pauseOthers = () => {
   var audios = document.querySelectorAll('audio');
@@ -150,34 +145,30 @@ const pauseOthers = () => {
   })
 }
 const changeSlider = (val) => {
-  audioElement.value.currentTime = val / 100 * duration.value
+  audioElement.value.currentTime = val / 100 * durationTime.value
   currentTime.value= audioElement.value.currentTime
 }
 const onProgress = () => {
-  // console.log('timeupdate')
   const audioRecord = audioElement.value
   const _currentTime = audioRecord ? audioRecord.currentTime : 0
   currentTime.value = _currentTime
-  slidervalue.value = _currentTime / duration.value * 100
+  slidervalue.value = _currentTime / durationTime.value * 100
 }
 const onError = (e) => {
   emit('error', e)
-  if (audioText.value) {
+  if (emptyautio.value) {
     this.$messageTip.$error({
       content: '该语音文件不存在，请重新上传。'
     })
   }
   saveLoading.value = false
 }
-const onPause = () => {
-  emit('stop', play.value)
-  play.value = false
-}
-const closeAudio = () => {
-  audioShow.value = false
-  audioElement.value.currentTime = 0
-  audioElement.value.pause()
-}
+
+// const closeAudio = () => {
+//   audioShow.value = false
+//   audioElement.value.currentTime = 0
+//   audioElement.value.pause()
+// }
 const bindPlay = () => {
   if (!audioElement.value) {
     return
@@ -186,7 +177,7 @@ const bindPlay = () => {
   playPromise.then(() => {
     play.value = true
     audioShow.value = true
-    duration.value = audioElement.value.duration
+    durationTime.value = audioElement.value.duration
     saveLoading.value = false
   }).catch((err) => {
     emit('error', err)
@@ -196,7 +187,6 @@ const bindPlay = () => {
   audioElement.value.addEventListener('pause', onPause)
 }
 const unbindPlay = () => {
-  const audioElement = audioElement.value
   play.value = false
   if (audioElement.value && !isIE.value) {
     audioElement.value.pause()
@@ -204,13 +194,13 @@ const unbindPlay = () => {
     audioElement.value.removeEventListener('pause', onPause)
   }
 }
+const onPause = () => {
+  emit('stop', play.value)
+  play.value = false
+}
 onMounted(() => {
 });
 onUnmounted(()=>{
-
   unbindPlay()
 })
 </script>
-<style lang="scss">
-@import "../../../assets/styles/widget/auditions.scss";
-</style>

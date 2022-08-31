@@ -10,6 +10,13 @@ import 'element-plus/theme-chalk/index.css';
 import locale from 'element-plus/lib/locale/lang/zh-cn'
 
 
+import "./assets/styles/widget/button.scss";
+import "./assets/styles/widget/auditions.scss";
+import "./assets/styles/widget/voiceupload.scss";
+import "./assets/styles/widget/message.scss";
+import "./assets/styles/widget/modal.scss";
+
+
 window.IEBrowser = window.ActiveXObject || 'ActiveXObject' in window
 
 const app = createApp(App)

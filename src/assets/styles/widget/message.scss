@@ -1,4 +1,5 @@
-
+@import '../base/mixin/size.scss';
+@import '../base/theme.scss';
 
 .modal.message-box.fade-up {
     .modal-content,
@@ -53,7 +54,7 @@
     @each $icon in $icons {
         .icon-message-#{$icon} {
             &::before{
-                background-image: url(~@/assets/icons/message-#{$icon}.png)
+                background-image: url(../../icons/message-#{$icon}.png)
             }
         }
       }
